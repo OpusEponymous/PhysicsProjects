@@ -36,7 +36,10 @@ public:
 
 	bool checkCollision(AABB &b);
 	bool Contains(glm::vec3 pt);
+	bool Contains(AABB &b);
 	bool TestRay(Ray3 ray);
+
+	float Volume();
 
 	AABB Union(AABB aabb);
 private:

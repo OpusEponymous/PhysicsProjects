@@ -222,6 +222,16 @@ bool AABB::Contains(glm::vec3 pt)
 	return true;
 }
 
+bool AABB::Contains(AABB &b)
+{
+	if( b.maxX > maxX || b.maxY > maxY || b.maxZ > maxZ ||
+		b.minX < minX || b.minY < minY || b.minZ < minZ)
+	{
+		return false;
+	}
+	return true;
+}
+
 bool AABB::TestRay(Ray3 ray)
 {
 	/*
@@ -311,4 +321,13 @@ AABB AABB::Union(AABB aabb)
 	float maxZU = max(maxZ, aabb.maxZ);
 
 	return AABB(maxXU, maxYU, maxZU, minXU, minYU, minZU);
+}
+
+float AABB::Volume()
+{
+	float lenX = maxX - minX;
+	float lenY = maxY - minY;
+	float lenZ = maxZ - minZ;
+
+	return lenX*lenY*lenZ;
 }

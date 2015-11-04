@@ -25,7 +25,7 @@ private:
 	void CrossChildren(Node *node);
 
 	Node *root;
-	vector<pair<RigidBody *, RigidBody *>> pairs;
+	vector<pair<AABB *, AABB *>> pairs;
 	float margin;
 	vector<Node *> invalidNodes;
 

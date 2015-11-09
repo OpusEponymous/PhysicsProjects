@@ -34,6 +34,8 @@ public:
 	ConvexMesh collider;
 	AABB boundingBox;
 	
+	Node *userData;
+
 	RigidBody();
 	RigidBody(float length, float mass, int id);
 	RigidBody(float mass, int id, vector<glm::vec3> &vPositions, vector<glm::vec4> &vColors, vector<glm::vec3> &vNormals, vector<GLuint> &vIndices);

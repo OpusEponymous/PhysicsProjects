@@ -8,6 +8,7 @@ RigidBody::RigidBody()
 	hasSpring = false;
 	k=3.0f;
 	b=0.2f;
+	userData = nullptr;
 }
 
 RigidBody::RigidBody(float length, float mass, int id)
@@ -22,6 +23,7 @@ RigidBody::RigidBody(float length, float mass, int id)
 	hasSpring = false;
 	k=3.0f;
 	b=0.2f;
+	userData = nullptr;
 }
 
 RigidBody::RigidBody(float mass, int id, vector<glm::vec3> &vPositions, vector<glm::vec4> &vColors, vector<glm::vec3> &vNormals, vector<GLuint> &vIndices)
@@ -54,6 +56,7 @@ RigidBody::RigidBody(float mass, int id, vector<glm::vec3> &vPositions, vector<g
 	hasSpring = false;
 	k=3.0f;
 	b=0.2f;
+	userData = nullptr;
 }
 
 

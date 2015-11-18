@@ -155,7 +155,7 @@ void AABBTree::RemoveNode(Node *node)
 		else	//If the node has no grandparent
 		{
 			//make the sibling root
-			Node *sibling = node->GetSibling;
+			Node *sibling = node->GetSibling();
 			root = sibling;
 			sibling->parent = nullptr;
 		}
@@ -175,9 +175,105 @@ void AABBTree::RemoveNode(Node *node)
 }
 
 //Compute Colliding Pairs
+vector<pair<RigidBody *, RigidBody *>> &AABBTree::ComputePairs()
+{
+	pairs.clear();
 
+	//Early Out - If the tree is empty or only has one node
+	if(!root || root->IsLeaf())
+	{
+		return pairs;
+	}
+
+	//Clear the childrenCrossed flags in the node class
+	ClearChildrenCrossFlagHelper(root);
+
+	// Initial recursive call
+	ComputePairsHelper(root->children[0], root->children[1]);
+
+	return pairs;
+}
+
+void AABBTree::ClearChildrenCrossFlagHelper(Node *node)
+{
+	node->childrenCrossed = false;
+	//If it has children clear their flags recursively
+	if( !node->IsLeaf())
+	{
+		ClearChildrenCrossFlagHelper(node->children[0]);
+		ClearChildrenCrossFlagHelper(node->children[1]);
+	}
+}
+
+void AABBTree::CrossChildren(Node *node)
+{
+	if(!node->childrenCrossed)
+	{
+		ComputePairsHelper(node->children[0], node->children[1]);
+		node->childrenCrossed = true;
+	}
+}
+
+void AABBTree::ComputePairsHelper(Node *n0, Node *n1)
+{
+	if(n0->IsLeaf())
+	{
+		
+		if(n1->IsLeaf())
+		{
+			//2 Leaves so check AABB
+			if(n0->data->boundingBox.checkCollision(n1->data->boundingBox))
+			{
+				pair<RigidBody*, RigidBody*> p(n0->data, n1->data);
+				pairs.push_back(p);
+			}
+		}
+		else
+		{
+			//1 Leaf 1 Branch, 2 Cross Check (n0 against children of n1)
+			CrossChildren(n1);
+			ComputePairsHelper(n0, n1->children[0]);
+			ComputePairsHelper(n0, n1->children[1]);
+		}
+	}
+	else
+	{
+		if(n1->IsLeaf())
+		{
+			//1 Leaf 1 Branch, 2 Cross Check (n1 against children of n0)
+			CrossChildren(n0);
+			ComputePairsHelper(n0->children[0], n1);
+			ComputePairsHelper(n0->children[1], n1);
+		}
+		else
+		{
+			//2 Branches, 4 Cross Checks
+			CrossChildren(n0);
+			CrossChildren(n1);
+			ComputePairsHelper(n0->children[0], n1->children[0]);
+			ComputePairsHelper(n0->children[0], n1->children[1]);
+			ComputePairsHelper(n0->children[1], n1->children[0]);
+			ComputePairsHelper(n0->children[1], n1->children[1]);
+
+		}
+	}
+}
 //Pick
+
+RigidBody *AABBTree::Pick(const glm::vec3 &point) const
+{
+	//To Do
+	return nullptr;
+}
 
 //Query
 
+
+
 //RayCast
+
+RayCastResult AABBTree::RayCast(const Ray3 &ray) const{
+	//To Do
+	RayCastResult a;
+	return a;
+}

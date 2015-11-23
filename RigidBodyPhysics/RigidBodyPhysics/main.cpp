@@ -10,10 +10,11 @@
 #include "Shader.h"
 #include "Plane.h"
 #include "NSquared.h"
+//#include "AABBTree.h"
 
 // Macro for indexing vertex buffer
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-#define NUM_RIGIDBODIES 3
+#define NUM_RIGIDBODIES 1
 #define WIDTH 1280
 #define HEIGHT 720
 
@@ -38,6 +39,7 @@ RigidBody rBody;
 
 vector<RigidBody> rigidBodies;
 NSquared nSqBroadPhase;
+//AABBTree aabbTree;
 
 void init();
 void keyboard(unsigned char key, int x, int y);
@@ -90,7 +92,9 @@ void display()
 		}
 
 		vector<pair<RigidBody *, RigidBody *>> CollidingPairs = nSqBroadPhase.ComputePairs();
-		
+		//vector<pair<RigidBody *, RigidBody *>> CollidingPairs = aabbTree.ComputePairs();
+
+
 		if(CollidingPairs.size()>0)
 		{
 			for (int i=0; i<CollidingPairs.size(); i++)
@@ -175,7 +179,7 @@ int main(int argc, char** argv){
 
 void init()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	modelMatrix = glm::mat4(1.0f, 0.0f, 0.0f, 0.0f,
 							0.0f, 1.0f, 0.0f, 0.0f,
@@ -211,7 +215,11 @@ void init()
 	for(int i=0; i<NUM_RIGIDBODIES; i++){
 		nSqBroadPhase.Add(&rigidBodies[i]);
 	}
-
+	/*
+	for(int i=0; i<NUM_RIGIDBODIES; i++){
+		aabbTree.Add(&rigidBodies[i]);
+	}
+	*/
 	GLuint mMatID = glGetUniformLocation(myShader->getID(), "mMatrix");
 	glUniformMatrix4fv(mMatID, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 

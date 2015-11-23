@@ -1,14 +1,14 @@
 #version 330
 
 layout (location = 0) in vec3 vPosition;
-layout (location = 3) in vec3 vColor;
+layout (location = 3) in vec4 vColor;
 
 
 uniform mat4 mMatrix;
 uniform mat4 vMatrix;
 uniform mat4 pMatrix;
 
-out vec3 color;
+out vec color;
 
 void main()
 {

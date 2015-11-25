@@ -277,3 +277,30 @@ RayCastResult AABBTree::RayCast(const Ray3 &ray) const{
 	RayCastResult a;
 	return a;
 }
+
+//Drawing
+void AABBTree::Draw(int layer)
+{
+	//Draws all nodes at a particular depth, root is considered to be at depth 0, exit if specified layer is lower
+	if(layer >= 0)
+	{
+		DrawTreeHelper(root, layer);
+	}
+}
+
+void AABBTree::DrawTreeHelper(Node *node, int layer_count)
+{
+	if(node != nullptr)
+	{
+		if(layer_count == 0)
+		{
+			node->aabb.Draw();
+		}
+		else
+		{
+			layer_count--;
+			DrawTreeHelper(node->children[0], layer_count);
+			DrawTreeHelper(node->children[1], layer_count);
+		}
+	}
+}

@@ -10,11 +10,11 @@
 #include "Shader.h"
 #include "Plane.h"
 #include "NSquared.h"
-//#include "AABBTree.h"
+#include "AABBTree.h"
 
 // Macro for indexing vertex buffer
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-#define NUM_RIGIDBODIES 3
+#define NUM_RIGIDBODIES 8
 #define WIDTH 1280
 #define HEIGHT 720
 
@@ -32,6 +32,8 @@ float t = 0.1f;
 float timeAccumulator = 0.0f;
 float currentTime = 0.0f;
 
+int drawLayer = 2;
+
 Camera cam;
 Shader *myShader;
 Shader *lineShader;
@@ -39,7 +41,7 @@ RigidBody rBody;
 
 vector<RigidBody> rigidBodies;
 NSquared nSqBroadPhase;
-//AABBTree aabbTree;
+AABBTree aabbTree;
 
 void init();
 void keyboard(unsigned char key, int x, int y);
@@ -91,8 +93,9 @@ void display()
 			rigidBodies[i].setNarrowColliding(false);			
 		}
 
-		vector<pair<RigidBody *, RigidBody *>> CollidingPairs = nSqBroadPhase.ComputePairs();
-		//vector<pair<RigidBody *, RigidBody *>> CollidingPairs = aabbTree.ComputePairs();
+		aabbTree.Update();
+		//vector<pair<RigidBody *, RigidBody *>> CollidingPairs = nSqBroadPhase.ComputePairs();
+		vector<pair<RigidBody *, RigidBody *>> CollidingPairs = aabbTree.ComputePairs();
 
 
 		if(CollidingPairs.size()>0)
@@ -142,6 +145,10 @@ void display()
 	glm::vec4 white = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec4 red = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 
+	glUniform4fv(pColID, 1, glm::value_ptr(white));
+	aabbTree.Draw(drawLayer);
+
+	/*
 	for(int i=0; i<NUM_RIGIDBODIES; i++){
 
 		if(rigidBodies[i].boundingBox.isBroadColliding)
@@ -155,7 +162,7 @@ void display()
 
 		rigidBodies[i].boundingBox.Draw();
 	}
-
+	*/
     glutSwapBuffers();
 }
 
@@ -223,17 +230,19 @@ void init()
 		rBody.attachSpring(glm::vec3(0.0f,5.0f,0.0f));
 		rBody.currentState.position = glm::vec3(-15.0f + (8.0f*i), 0.0f, -10.0f + (8.0f*i));
 		rBody.currentState.recalculate();
+		rBody.calcBoundingBox();
 		rigidBodies.push_back(rBody);
-	}
-
-	for(int i=0; i<NUM_RIGIDBODIES; i++){
-		nSqBroadPhase.Add(&rigidBodies[i]);
 	}
 	/*
 	for(int i=0; i<NUM_RIGIDBODIES; i++){
-		aabbTree.Add(&rigidBodies[i]);
+		nSqBroadPhase.Add(&rigidBodies[i]);
 	}
 	*/
+	
+	for(int i=0; i<NUM_RIGIDBODIES; i++){
+		aabbTree.Add(&rigidBodies[i]);
+	}
+	
 	GLuint mMatID = glGetUniformLocation(myShader->getID(), "mMatrix");
 	glUniformMatrix4fv(mMatID, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
@@ -272,6 +281,16 @@ void keyboard(unsigned char key, int x, int y){
 		for(int i=0; i< NUM_RIGIDBODIES; i++){
 			rigidBodies[i].springPos = glm::vec3(-5.0f, 5.0f, 0.0f);
 		}
+	}
+
+	if(key == '+')
+	{
+		drawLayer++;
+	}
+
+	if(key == '-')
+	{
+		drawLayer--;
 	}
 }
 

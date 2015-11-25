@@ -14,7 +14,7 @@ public:
 	RigidBody *Pick(const glm::vec3 &point) const;
 	//void Query(const RigidBody &rBody, vector<RigidBody *> &output) const;	//Not Sure I need/want this
 	RayCastResult RayCast(const Ray3 &ray) const;
-
+	void Draw(int layer);
 private:
 	void UpdateNodeHelper(Node *node, vector<Node *> &invalidNodes);
 	void InsertNode(Node *node, Node **parent);
@@ -22,12 +22,13 @@ private:
 	void ComputePairsHelper(Node *n0, Node* n1);
 	void ClearChildrenCrossFlagHelper(Node *node);
 	void CrossChildren(Node *node);
+	void DrawTreeHelper(Node *node, int layer_count);
 
 	Node *root;
 	vector<pair<RigidBody *, RigidBody *>> pairs;
 	float margin;
 	vector<Node *> invalidNodes;
-
+	
 };
 
 #endif // !AABBTREE_H

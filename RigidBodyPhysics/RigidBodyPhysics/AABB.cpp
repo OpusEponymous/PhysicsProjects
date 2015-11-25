@@ -31,15 +31,6 @@ void AABB::Draw(){
 	glBindVertexArray(0);
 	*/
 	
-	if(!isBroadColliding)
-	{
-		glColor3f(0.0f, 1.0f, 1.0f);
-
-	}
-	else
-	{
-		glColor3f(1.0f, 0.0f, 0.0f);
-	}
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_QUADS);
 

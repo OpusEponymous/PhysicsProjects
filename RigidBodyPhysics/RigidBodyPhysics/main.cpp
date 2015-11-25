@@ -14,7 +14,7 @@
 
 // Macro for indexing vertex buffer
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-#define NUM_RIGIDBODIES 1
+#define NUM_RIGIDBODIES 3
 #define WIDTH 1280
 #define HEIGHT 720
 
@@ -138,7 +138,21 @@ void display()
 	pMatID = glGetUniformLocation(lineShader->getID(), "pMatrix");
 	glUniformMatrix4fv(pMatID, 1, GL_FALSE, glm::value_ptr(projMatrix));
 
+	GLuint pColID = glGetUniformLocation(lineShader->getID(), "pColor");
+	glm::vec4 white = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 red = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+
 	for(int i=0; i<NUM_RIGIDBODIES; i++){
+
+		if(rigidBodies[i].boundingBox.isBroadColliding)
+		{
+			glUniform4fv(pColID, 1, glm::value_ptr(red));
+		}
+		else
+		{
+			glUniform4fv(pColID, 1, glm::value_ptr(white));
+		}
+
 		rigidBodies[i].boundingBox.Draw();
 	}
 
@@ -179,7 +193,7 @@ int main(int argc, char** argv){
 
 void init()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
 	modelMatrix = glm::mat4(1.0f, 0.0f, 0.0f, 0.0f,
 							0.0f, 1.0f, 0.0f, 0.0f,

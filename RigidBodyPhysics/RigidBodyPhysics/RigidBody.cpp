@@ -277,7 +277,8 @@ void RigidBody::calcBoundingBox(){
 
 void RigidBody::setBroadColliding(bool state){
 	isBroadColliding = state;
-	boundingBox.isBroadColliding = state;
+	boundingBox.setBroadColliding(state);
+	//boundingBox.isBroadColliding = state;
 }
 
 void RigidBody::setNarrowColliding(bool state){

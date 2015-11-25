@@ -33,6 +33,7 @@ public:
 
 	void Draw();
 	void Update(float mX, float mY, float mZ, float mnX, float mnY, float mnZ);
+	void setBroadColliding(bool state);
 
 	bool checkCollision(AABB &b);
 	bool Contains(glm::vec3 pt);
@@ -45,7 +46,7 @@ public:
 private:
 	vector<glm::vec3> vertexPositions;
 	vector<glm::vec4> vertexColors;
-	GLuint vertexIndices[36];
+	GLuint vertexIndices[48];
 
 	GLuint vertexArraySize;
 	GLuint colorArraySize;

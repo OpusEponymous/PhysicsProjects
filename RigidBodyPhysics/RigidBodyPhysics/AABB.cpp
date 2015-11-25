@@ -20,7 +20,17 @@ AABB::AABB(float mX, float mY, float mZ, float mnX, float mnY, float mnZ){
 }
 
 void AABB::Draw(){
+	/*
+	glBindVertexArray(VAO);
 
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
+
+	//glDrawElements(GL_LINES, numIndices, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_LINES, numIndices, GL_UNSIGNED_INT, vertexIndices);
+
+	glBindVertexArray(0);
+	*/
+	
 	if(!isBroadColliding)
 	{
 		glColor3f(0.0f, 1.0f, 1.0f);
@@ -39,6 +49,7 @@ void AABB::Draw(){
 	}
 	glEnd();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 }
 
 void AABB::generateObjectBuffer()
@@ -46,7 +57,7 @@ void AABB::generateObjectBuffer()
 	glGenVertexArrays( 1, &VAO);
 	glBindVertexArray( VAO );
 
-	numIndices = 36;
+	numIndices = 48;
 	vertexArraySize = vertexPositions.size()*sizeof(glm::vec3);
 	colorArraySize = vertexColors.size()*sizeof(glm::vec4);
 
@@ -86,7 +97,7 @@ void AABB::generateVertices()
 	glm::vec4 purple = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f);
 	glm::vec4 cyan = glm::vec4(0.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec4 orange = glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
-	glm::vec4 white = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	glm::vec4 white = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f);
 
 	//FrontFace
 	vertexPositions.push_back(glm::vec3(minX, maxY, maxZ));		vertexColors.push_back(white);		//0
@@ -124,29 +135,41 @@ void AABB::generateVertices()
 	vertexPositions.push_back(glm::vec3(maxX, minY, minZ));		vertexColors.push_back(white);		//22
 	vertexPositions.push_back(glm::vec3(minX, minY, minZ));		vertexColors.push_back(white);		//23
 
-	//CreateIndices
+	//CreateIndices --  For GL Lines, Just a test, this really aint efficient
 	GLuint indices[] = { 
-		0, 1, 2,
-		2, 3, 0,
-	
-		4, 5, 6,
-		6, 7, 4,
-	
-		8, 9, 10,
-		10, 11, 8,
-	
-		12, 13, 14,
-		14, 15, 12,
-	
-		16, 17, 18,
-		18, 19, 16,
-	
-		20, 21, 22,
-		22, 23, 20
+		0, 1,
+		1, 2,
+		2, 3,
+		3, 0,
+
+		4, 5,
+		5, 6,
+		6, 7,
+		7, 4,
+
+		8, 9,
+		9, 10,
+		10, 11,
+		11, 8,
+
+		12, 13,
+		13, 14,
+		14, 15,
+		15, 12,
+
+		16, 17,
+		17, 18,
+		18, 19,
+		19, 16,
+
+		20, 21,
+		21, 22,
+		22, 23,
+		23, 20
 
 	};
 
-	for(int i = 0; i<36; i++){
+	for(int i = 0; i<48; i++){
 		vertexIndices[i] = indices[i];
 	}
 }
@@ -161,42 +184,40 @@ void AABB::Update(float mX, float mY, float mZ, float mnX, float mnY, float mnZ)
 	minY = mnY;
 	minZ = mnZ;
 
-	glm::vec4 white = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-
-	vertexPositions[0] = glm::vec3(minX, maxY, maxZ);		vertexColors[0] = white;		//0
-	vertexPositions[1] = glm::vec3(maxX, maxY, maxZ);		vertexColors[1] = white;		//1
-	vertexPositions[2] = glm::vec3(maxX, minY, maxZ);		vertexColors[2] = white;		//2
-	vertexPositions[3] = glm::vec3(minX, minY, maxZ);		vertexColors[3] = white;		//3
+	vertexPositions[0] = glm::vec3(minX, maxY, maxZ);		//0
+	vertexPositions[1] = glm::vec3(maxX, maxY, maxZ);		//1
+	vertexPositions[2] = glm::vec3(maxX, minY, maxZ);		//2
+	vertexPositions[3] = glm::vec3(minX, minY, maxZ);		//3
 
 	//RightFace
-	vertexPositions[4] = glm::vec3(maxX, maxY, maxZ);		vertexColors[4] = white;		//4
-	vertexPositions[5] = glm::vec3(maxX, maxY, minZ);		vertexColors[5] = white;		//5
-	vertexPositions[6] = glm::vec3(maxX, minY, minZ);		vertexColors[6] = white;		//6
-	vertexPositions[7] = glm::vec3(maxX, minY, maxZ);		vertexColors[7] = white;		//7
+	vertexPositions[4] = glm::vec3(maxX, maxY, maxZ);		//4
+	vertexPositions[5] = glm::vec3(maxX, maxY, minZ);		//5
+	vertexPositions[6] = glm::vec3(maxX, minY, minZ);		//6
+	vertexPositions[7] = glm::vec3(maxX, minY, maxZ);		//7
 
 	//BackFace
-	vertexPositions[8] = glm::vec3(maxX, maxY, minZ);		vertexColors[8] = white;		//8
-	vertexPositions[9] = glm::vec3(minX, maxY, minZ);		vertexColors[9] = white;		//9
-	vertexPositions[10] = glm::vec3(minX, minY, minZ);		vertexColors[10] = white;		//10
-	vertexPositions[11] = glm::vec3(maxX, minY, minZ);		vertexColors[11] = white;		//11
+	vertexPositions[8] = glm::vec3(maxX, maxY, minZ);		//8
+	vertexPositions[9] = glm::vec3(minX, maxY, minZ);		//9
+	vertexPositions[10] = glm::vec3(minX, minY, minZ);		//10
+	vertexPositions[11] = glm::vec3(maxX, minY, minZ);		//11
 
 	//LeftFace
-	vertexPositions[12] = glm::vec3(minX, maxY, minZ);		vertexColors[12] = white;		//12
-	vertexPositions[13] = glm::vec3(minX, maxY, maxZ);		vertexColors[13] = white;		//13
-	vertexPositions[14] = glm::vec3(minX, minY, maxZ);		vertexColors[14] = white;		//14
-	vertexPositions[15] = glm::vec3(minX, minY, minZ);		vertexColors[15] = white;		//15
+	vertexPositions[12] = glm::vec3(minX, maxY, minZ);		//12
+	vertexPositions[13] = glm::vec3(minX, maxY, maxZ);		//13
+	vertexPositions[14] = glm::vec3(minX, minY, maxZ);		//14
+	vertexPositions[15] = glm::vec3(minX, minY, minZ);		//15
 
 	//TopFace
-	vertexPositions[16] = glm::vec3(minX, maxY, minZ);		vertexColors[16] = white;		//16
-	vertexPositions[17] = glm::vec3(maxX, maxY, minZ);		vertexColors[17] = white;		//17
-	vertexPositions[18] = glm::vec3(maxX, maxY, maxZ);		vertexColors[18] = white;		//18
-	vertexPositions[19] = glm::vec3(minX, maxY, maxZ);		vertexColors[19] = white;		//19
+	vertexPositions[16] = glm::vec3(minX, maxY, minZ);		//16
+	vertexPositions[17] = glm::vec3(maxX, maxY, minZ);		//17
+	vertexPositions[18] = glm::vec3(maxX, maxY, maxZ);		//18
+	vertexPositions[19] = glm::vec3(minX, maxY, maxZ);		//19
 
 	//BottomFace
-	vertexPositions[20] = glm::vec3(minX, minY, maxZ);		vertexColors[20] = white;		//20
-	vertexPositions[21] = glm::vec3(maxX, minY, maxZ);		vertexColors[21] = white;		//21
-	vertexPositions[22] = glm::vec3(maxX, minY, minZ);		vertexColors[22] = white;		//22
-	vertexPositions[23] = glm::vec3(minX, minY, minZ);		vertexColors[23] = white;		//23
+	vertexPositions[20] = glm::vec3(minX, minY, maxZ);		//20
+	vertexPositions[21] = glm::vec3(maxX, minY, maxZ);		//21
+	vertexPositions[22] = glm::vec3(maxX, minY, minZ);		//22
+	vertexPositions[23] = glm::vec3(minX, minY, minZ);		//23
 }
 
 bool AABB::checkCollision(AABB &b)
@@ -330,4 +351,46 @@ float AABB::Volume()
 	float lenZ = maxZ - minZ;
 
 	return lenX*lenY*lenZ;
+}
+
+void AABB::setBroadColliding(bool state)
+{
+	isBroadColliding = state;
+
+	glm::vec4 color = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f);
+	if(state)
+	{
+		color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	}
+
+	vertexColors[0] = color;
+	vertexColors[1] = color;
+	vertexColors[2] = color;
+	vertexColors[3] = color;
+		
+	vertexColors[4] = color;
+	vertexColors[5] = color;
+	vertexColors[6] = color;
+	vertexColors[7] = color;
+	
+	vertexColors[8] = color;
+	vertexColors[9] = color;
+	vertexColors[10] = color;
+	vertexColors[11] = color;
+		
+	vertexColors[12] = color;
+	vertexColors[13] = color;
+	vertexColors[14] = color;
+	vertexColors[15] = color;
+		
+	vertexColors[16] = color;
+	vertexColors[17] = color;
+	vertexColors[18] = color;
+	vertexColors[19] = color;
+		
+	vertexColors[20] = color;
+	vertexColors[21] = color;
+	vertexColors[22] = color;
+	vertexColors[23] = color;
+	
 }

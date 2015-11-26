@@ -286,15 +286,17 @@ void AABBTree::Draw(int layer)
 	{
 		DrawTreeHelper(root, layer);
 	}
+	//cout << endl << "Tree Drawn" << endl;
 }
 
 void AABBTree::DrawTreeHelper(Node *node, int layer_count)
 {
 	if(node != nullptr)
 	{
-		if(layer_count == 0)
+		if(layer_count == 0 || node->IsLeaf())
 		{
 			node->aabb.Draw();
+			//cout << "Node Drawn" << endl;
 		}
 		else
 		{

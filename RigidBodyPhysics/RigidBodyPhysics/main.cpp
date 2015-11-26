@@ -32,7 +32,7 @@ float t = 0.1f;
 float timeAccumulator = 0.0f;
 float currentTime = 0.0f;
 
-int drawLayer = 2;
+int drawLayer = 3;
 
 Camera cam;
 Shader *myShader;

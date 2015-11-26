@@ -161,7 +161,6 @@ void ConvexMesh::GenerateCube(float length)
 		vertexIndices.push_back(indices[i]);
 	}
 	numIndices = 36;
-	cout << "Test Print";
 }
 
 void ConvexMesh::generateObjectBuffer()

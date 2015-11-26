@@ -45,13 +45,15 @@ struct Node
 		if(IsLeaf())
 		{
 			//Make Fat AABB
-			aabb.minX = data->boundingBox.minX - margin;
-			aabb.minY = data->boundingBox.minY - margin;
-			aabb.minZ = data->boundingBox.minZ - margin;
+			float minX = data->boundingBox.minX - margin;
+			float minY = data->boundingBox.minY - margin;
+			float minZ = data->boundingBox.minZ - margin;
 
-			aabb.maxX = data->boundingBox.maxX + margin;
-			aabb.maxY = data->boundingBox.maxY + margin;
-			aabb.maxZ = data->boundingBox.maxZ + margin;
+			float maxX = data->boundingBox.maxX + margin;
+			float maxY = data->boundingBox.maxY + margin;
+			float maxZ = data->boundingBox.maxZ + margin;
+
+			aabb = AABB(maxX, maxY, maxZ, minX, minY, minZ);
 		}
 		else
 		{

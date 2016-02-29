@@ -164,10 +164,10 @@ void RigidBody::generateVertices(float length){
 	vertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//3
 
 	//RightFace
-	vertexPositions.push_back(glm::vec3(dist, dist, dist));			//4
-	vertexPositions.push_back(glm::vec3(dist, dist, -dist));		//5
-	vertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//6
-	vertexPositions.push_back(glm::vec3(dist, -dist, dist));		//7
+	//vertexPositions.push_back(glm::vec3(dist, dist, dist));			//4
+	//vertexPositions.push_back(glm::vec3(dist, dist, -dist));		//5
+	//vertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//6
+	//vertexPositions.push_back(glm::vec3(dist, -dist, dist));		//7
 
 	//BackFace
 	vertexPositions.push_back(glm::vec3(dist, dist, -dist));		//8
@@ -176,22 +176,22 @@ void RigidBody::generateVertices(float length){
 	vertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//11
 
 	//LeftFace
-	vertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//12
-	vertexPositions.push_back(glm::vec3(-dist, dist, dist));		//13
-	vertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//14
-	vertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//15
+	//vertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//12
+	//vertexPositions.push_back(glm::vec3(-dist, dist, dist));		//13
+	//vertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//14
+	//vertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//15
 
 	//TopFace
-	vertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//16
-	vertexPositions.push_back(glm::vec3(dist, dist, -dist));		//17
-	vertexPositions.push_back(glm::vec3(dist, dist, dist));			//18
-	vertexPositions.push_back(glm::vec3(-dist, dist, dist));		//19
+	//vertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//16
+	//vertexPositions.push_back(glm::vec3(dist, dist, -dist));		//17
+	//vertexPositions.push_back(glm::vec3(dist, dist, dist));			//18
+	//vertexPositions.push_back(glm::vec3(-dist, dist, dist));		//19
 
 	//BottomFace
-	vertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//20
-	vertexPositions.push_back(glm::vec3(dist, -dist, dist));		//21
-	vertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//22
-	vertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//23
+	//vertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//20
+	//vertexPositions.push_back(glm::vec3(dist, -dist, dist));		//21
+	//vertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//22
+	//vertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//23
 
 	//Other Vector
 	//FrontFace
@@ -201,10 +201,10 @@ void RigidBody::generateVertices(float length){
 	originalVertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//3
 
 	//RightFace
-	originalVertexPositions.push_back(glm::vec3(dist, dist, dist));			//4
-	originalVertexPositions.push_back(glm::vec3(dist, dist, -dist));		//5
-	originalVertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//6
-	originalVertexPositions.push_back(glm::vec3(dist, -dist, dist));		//7
+	//originalVertexPositions.push_back(glm::vec3(dist, dist, dist));			//4
+	//originalVertexPositions.push_back(glm::vec3(dist, dist, -dist));		//5
+	//originalVertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//6
+	//originalVertexPositions.push_back(glm::vec3(dist, -dist, dist));		//7
 
 	//BackFace
 	originalVertexPositions.push_back(glm::vec3(dist, dist, -dist));		//8
@@ -213,22 +213,22 @@ void RigidBody::generateVertices(float length){
 	originalVertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//11
 
 	//LeftFace
-	originalVertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//12
-	originalVertexPositions.push_back(glm::vec3(-dist, dist, dist));		//13
-	originalVertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//14
-	originalVertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//15
+	//originalVertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//12
+	//originalVertexPositions.push_back(glm::vec3(-dist, dist, dist));		//13
+	//originalVertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//14
+	//originalVertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//15
 
 	//TopFace
-	originalVertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//16
-	originalVertexPositions.push_back(glm::vec3(dist, dist, -dist));		//17
-	originalVertexPositions.push_back(glm::vec3(dist, dist, dist));			//18
-	originalVertexPositions.push_back(glm::vec3(-dist, dist, dist));		//19
+	//originalVertexPositions.push_back(glm::vec3(-dist, dist, -dist));		//16
+	//originalVertexPositions.push_back(glm::vec3(dist, dist, -dist));		//17
+	//originalVertexPositions.push_back(glm::vec3(dist, dist, dist));			//18
+	//originalVertexPositions.push_back(glm::vec3(-dist, dist, dist));		//19
 
 	//BottomFace
-	originalVertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//20
-	originalVertexPositions.push_back(glm::vec3(dist, -dist, dist));		//21
-	originalVertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//22
-	originalVertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//23
+	//originalVertexPositions.push_back(glm::vec3(-dist, -dist, dist));		//20
+	//originalVertexPositions.push_back(glm::vec3(dist, -dist, dist));		//21
+	//originalVertexPositions.push_back(glm::vec3(dist, -dist, -dist));		//22
+	//originalVertexPositions.push_back(glm::vec3(-dist, -dist, -dist));		//23
 }
 
 void RigidBody::applyTransform(State state){

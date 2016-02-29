@@ -322,7 +322,7 @@ bool AABB::TestRay(Ray3 ray)
 
 }
 
-AABB AABB::Union(AABB aabb)
+AABB AABB::Union(const AABB& aabb)
 {
 	float minXU = min(minX, aabb.minX);
 	float minYU = min(minY, aabb.minY);
@@ -335,6 +335,18 @@ AABB AABB::Union(AABB aabb)
 	return AABB(maxXU, maxYU, maxZU, minXU, minYU, minZU);
 }
 
+void AABB::Union(AABB& u, const AABB& aabb){
+	float minXU = min(minX, aabb.minX);
+	float minYU = min(minY, aabb.minY);
+	float minZU = min(minZ, aabb.minZ);
+	
+	float maxXU = max(maxX, aabb.maxX);
+	float maxYU = max(maxY, aabb.maxY);
+	float maxZU = max(maxZ, aabb.maxZ);
+
+	u.Update(maxXU, maxYU, maxZU, minXU, minYU, minZU);
+}
+
 float AABB::Volume()
 {
 	float lenX = maxX - minX;
@@ -342,6 +354,22 @@ float AABB::Volume()
 	float lenZ = maxZ - minZ;
 
 	return lenX*lenY*lenZ;
+}
+
+float AABB::UnionVolume(const AABB& aabb){
+	float minXU = min(minX, aabb.minX);
+	float minYU = min(minY, aabb.minY);
+	float minZU = min(minZ, aabb.minZ);
+	
+	float maxXU = max(maxX, aabb.maxX);
+	float maxYU = max(maxY, aabb.maxY);
+	float maxZU = max(maxZ, aabb.maxZ);
+
+	float lenX = maxXU - minXU;
+	float lenY = maxYU - minYU;
+	float lenZ = maxZU - minZU;
+
+	return lenX * lenY * lenZ;
 }
 
 void AABB::setBroadColliding(bool state)

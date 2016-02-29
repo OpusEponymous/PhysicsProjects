@@ -41,8 +41,9 @@ public:
 	bool TestRay(Ray3 ray);
 
 	float Volume();
-
-	AABB Union(AABB aabb);
+	float UnionVolume(const AABB& aabb);
+	AABB Union(const AABB& aabb);
+	void Union(AABB& u, const AABB& aabb);
 private:
 	vector<glm::vec3> vertexPositions;
 	vector<glm::vec4> vertexColors;

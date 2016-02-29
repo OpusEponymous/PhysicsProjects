@@ -42,8 +42,10 @@ void AABBTree::InsertNode(Node *node, Node **parent)
 		//Parent is a branch, compute volume heuristic
 		AABB aabb0 = p->children[0]->aabb;
 		AABB aabb1 = p->children[1]->aabb;
-		const float volumeDiff0 = aabb0.Union(node->aabb).Volume() - aabb0.Volume();
-		const float volumeDiff1 = aabb1.Union(node->aabb).Volume() - aabb1.Volume();
+		//const float volumeDiff0 = aabb0.Union(node->aabb).Volume() - aabb0.Volume();
+		//const float volumeDiff1 = aabb1.Union(node->aabb).Volume() - aabb1.Volume();
+		const float volumeDiff0 = aabb0.UnionVolume(node->aabb) - aabb0.Volume();
+		const float volumeDiff1 = aabb1.UnionVolume(node->aabb) - aabb1.Volume();
 
 		//Insert to the child that gives less volume increase
 		if(volumeDiff0 < volumeDiff1)

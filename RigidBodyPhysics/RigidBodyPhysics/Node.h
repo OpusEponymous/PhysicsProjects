@@ -15,6 +15,7 @@ struct Node
 		data = nullptr;
 		children[0] = nullptr;
 		children[1] = nullptr;
+		aabb = AABB(1.0f,1.0f,1.0f,1.0f,1.0f,1.0f);
 	}
 
 	bool IsLeaf()
@@ -53,12 +54,13 @@ struct Node
 			float maxY = data->boundingBox.maxY + margin;
 			float maxZ = data->boundingBox.maxZ + margin;
 
-			aabb = AABB(maxX, maxY, maxZ, minX, minY, minZ);
+			aabb.Update(maxX, maxY, maxZ, minX, minY, minZ);
 		}
 		else
 		{
 			//make union of all child nodes
-			aabb = children[0]->aabb.Union(children[1]->aabb);
+			//aabb = children[0]->aabb.Union(children[1]->aabb);
+			children[0]->aabb.Union(aabb, children[1]->aabb);
 		}
 	}
 
